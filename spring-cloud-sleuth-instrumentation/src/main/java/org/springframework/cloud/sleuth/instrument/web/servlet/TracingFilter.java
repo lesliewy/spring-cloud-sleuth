@@ -76,6 +76,7 @@ public final class TracingFilter implements Filter {
 		Span span = handler.handleReceive(new HttpServletRequestWrapper(req));
 
 		// Add attributes for explicit access to customization or span context
+		/** 把span信息放在request中 */
 		request.setAttribute(SpanCustomizer.class.getName(), span);
 		request.setAttribute(TraceContext.class.getName(), span.context());
 		SendHandled sendHandled = new SendHandled();
@@ -96,6 +97,7 @@ public final class TracingFilter implements Filter {
 			// When async, even if we caught an exception, we don't have the final
 			// response: defer
 			if (servlet.isAsync(req)) {
+				/** 异步处理采集请求信息到span */
 				servlet.handleAsync(handler, req, res, span);
 			}
 			else if (sendHandled.compareAndSet(false, true)) {

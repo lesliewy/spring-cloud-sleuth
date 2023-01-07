@@ -44,6 +44,38 @@ public class RestTemplateSender extends HttpSender {
 		super((url, mediaType, bytes) -> post(url, mediaType, bytes, restTemplate), baseUrl, apiPath, encoder);
 	}
 
+	/**
+	 * 发送给zipkin的json:
+	 * [
+	 *     {
+	 *         "traceId": "5394401c50f88265",
+	 *         "parentId": "5394401c50f88265",
+	 *         "id": "3109ebaf6dd8c96a",
+	 *         "kind": "SERVER",
+	 *         "name": "get",
+	 *         "timestamp": 1673091448994373,
+	 *         "duration": 117970239,
+	 *         "localEndpoint":
+	 *         {
+	 *             "serviceName": "testsleuthzipkin",
+	 *             "ipv4": "192.168.245.1"
+	 *         },
+	 *         "remoteEndpoint":
+	 *         {
+	 *             "ipv4": "127.0.0.1",
+	 *             "port": 47296
+	 *         },
+	 *         "tags":
+	 *         {
+	 *             "http.method": "GET",
+	 *             "http.path": "/call",
+	 *             "mvc.controller.class": "SampleController",
+	 *             "mvc.controller.method": "call"
+	 *         },
+	 *         "shared": true
+	 *     }
+	 * ]
+	 */
 	private static void post(String url, MediaType mediaType, byte[] json, RestTemplate restTemplate) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(mediaType);

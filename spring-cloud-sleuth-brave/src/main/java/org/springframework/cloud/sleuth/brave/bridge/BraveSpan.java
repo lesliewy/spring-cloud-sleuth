@@ -116,6 +116,9 @@ public class BraveSpan implements Span {
 		return unwrap.delegate;
 	}
 
+	/**
+	 * 封装 brave.Span
+	 */
 	public static Span fromBrave(brave.Span span) {
 		return new BraveSpan(span);
 	}

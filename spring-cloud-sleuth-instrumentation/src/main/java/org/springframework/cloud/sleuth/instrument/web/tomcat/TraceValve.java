@@ -74,6 +74,7 @@ public class TraceValve extends ValveBase {
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		Object attribute = request.getAttribute(Span.class.getName());
+		/** 一般不进入这个分支 */
 		if (attribute != null) {
 			// this could happen for async dispatch
 			try (CurrentTraceContext.Scope ws = currentTraceContext().maybeScope(((Span) attribute).context())) {
@@ -87,6 +88,7 @@ public class TraceValve extends ValveBase {
 			}
 		}
 		Exception ex = null;
+		/** BraveHttpServerHandler */
 		Span handleReceive = httpServerHandler().handleReceive(HttpServletRequestWrapper.create(request.getRequest()));
 		if (log.isDebugEnabled()) {
 			log.debug("Created a server receive span [" + handleReceive + "]");
@@ -100,6 +102,7 @@ public class TraceValve extends ValveBase {
 				// no next valve
 				return;
 			}
+			/** 这里会调用filters, controllers */
 			next.invoke(request, response);
 		}
 		catch (Exception exception) {

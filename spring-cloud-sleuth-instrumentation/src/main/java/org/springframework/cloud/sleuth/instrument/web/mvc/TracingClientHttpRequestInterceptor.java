@@ -66,6 +66,7 @@ public final class TracingClientHttpRequestInterceptor implements ClientHttpRequ
 		ClientHttpResponse response = null;
 		Throwable error = null;
 		try (CurrentTraceContext.Scope ws = currentTraceContext.newScope(span.context())) {
+			/** 这里最终会发出http请求 */
 			response = execution.execute(req, body);
 			return response;
 		}

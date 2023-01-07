@@ -42,6 +42,10 @@ public class LazyTraceClientHttpRequestInterceptor implements ClientHttpRequestI
 		this.beanFactory = beanFactory;
 	}
 
+	/**
+	 * org.springframework.http.client.InterceptingClientHttpRequest.InterceptingRequestExecution#execute
+	 * 由这里调用这里的interceptor.
+	 */
 	@Override
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
 			throws IOException {

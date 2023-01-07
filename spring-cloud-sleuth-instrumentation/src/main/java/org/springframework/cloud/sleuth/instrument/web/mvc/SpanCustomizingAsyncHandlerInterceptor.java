@@ -47,6 +47,7 @@ public final class SpanCustomizingAsyncHandlerInterceptor extends HandlerInterce
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
 		Object span = request.getAttribute(SpanCustomizer.class.getName());
 		if (span instanceof SpanCustomizer) {
+			/** HandlerParser#preHandle: 主要设置一些tags*/
 			handlerParser.preHandle(request, o, (SpanCustomizer) span);
 		}
 		return true;
